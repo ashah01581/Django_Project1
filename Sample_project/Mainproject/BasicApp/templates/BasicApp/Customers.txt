@@ -1,7 +1,0 @@
-id,fname,lname
-1,john,wick
-2,donald,garison
-3,akhil,shah
-4,joe,trick
-5,donald,trump
-6,john,cena
