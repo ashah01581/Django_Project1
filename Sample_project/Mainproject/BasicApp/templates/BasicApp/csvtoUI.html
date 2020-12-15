@@ -1,0 +1,44 @@
+<!--
+step1 : used for loop
+step2: got dict key values -- i.id
+
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>table</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+<body>
+	<table>
+		<td>id</td>
+		<td>first_name</td>
+		<td>last_name</td>
+		<td>Link</td>
+		<td>
+			<form action='restored' method='POST'>  {% csrf_token %}
+				<button type='submit'> Restore Deleted Customers
+					
+				</button>
+			</form>
+		</td>
+		{% for i in datas %}
+		<tr>
+			<td>{{i.id}}</td>
+			<td>{{i.fname}}</td>
+			<td>{{i.lname}}</td>
+			<td> 
+				<form > <!-- keep action empty to send data to same page -->
+					<button onclick="deleteRow('47')">Delete</button>
+					<!-- type=submit will send data to url, name is variable and value will be varoable value -->
+				</form>
+			</td>
+		</tr>
+		{% endfor %}
+	</table>
+</body>
+</html>

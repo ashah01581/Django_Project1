@@ -1,0 +1,261 @@
+<!--
+step1 : used for loop
+step2: got dict key values -- i.id
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}table{% endblock title %}</title>
+	{% block style %}
+    {% endblock style %}
+</head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+{% block javascript %}
+
+<script type="text/javascript">
+	function getFunction(e){
+		//e.preventDefault();
+        // get the nickname
+        //var nick_name = $("#nickname").val();
+        // GET AJAX request
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'GET_sqltable' %}",
+            success: function (response) {
+                // if not valid user, alert the user
+                if(!response["human_Persons"]){
+                    alert("no data from backend");
+                } else {
+             		alert('data received successfully')
+             		console.log(response)
+             		var URL = 'APImain'					//MIMP: to relaod main page
+             		window.location = URL; 
+                }
+            },
+            error: function (response) {
+                alert('sever issue')
+            }
+        })
+	}
+
+	function post_InsertFunction(e){
+		var Persons_id =$("#Persons_id").val();
+		var	city =$("#city").val();
+		var	Persons_name =$("#Persons_name").val();
+		var	assets =$("#assets").val();
+		var	is_alien =$("#is_alien").val();
+		var	age =$("#age").val();
+		var	month_expense =$("#month_expense").val();
+		var	discount =$("#discount").val();
+		var	email =$("#email").val();
+		var	active =$("#active").val();
+		var	order_date =$("#order_date").val();
+
+		var data = {
+			"Persons_id" : Persons_id,
+			"city" : city,
+			"Persons_name" : Persons_name,
+			"assets" : assets,
+			"is_alien" : is_alien,
+			"age" : age,
+			"month_expense" : month_expense,
+			"discount" : discount,
+			"email" : email,
+			"active" : active,
+			"order_date" : order_date
+		}
+		console.log(data);
+		var token = '{{csrf_token}}'; 
+        
+        // POST AJAX request
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'post_Insertsql' %}",
+            datatype: "json",
+            contentType: "application/json",
+            headers: { "X-CSRFToken": token },
+            data: JSON.stringify(data),
+            	//Persons_id: Persons_id_val, 		//to pass 1 var we can use this
+            success: function (response) {
+                console.log(response)
+                alert('data Inserted successfully')
+            },
+            error: function (response) {
+                console.log('sever issue')
+            }
+        })
+	}
+
+	function post_UpdateFunction(e){
+		var Persons_id =$("#Persons_id").val();
+		var	city =$("#city").val();
+		var	Persons_name =$("#Persons_name").val();
+		var	assets =$("#assets").val();
+		var	is_alien =$("#is_alien").val();
+		var	age =$("#age").val();
+		var	month_expense =$("#month_expense").val();
+		var	discount =$("#discount").val();
+		var	email =$("#email").val();
+		var	active =$("#active").val();
+		var	order_date =$("#order_date").val();
+
+		var data = {
+			"Persons_id" : Persons_id,
+			"city" : city,
+			"Persons_name" : Persons_name,
+			"assets" : assets,
+			"is_alien" : is_alien,
+			"age" : age,
+			"month_expense" : month_expense,
+			"discount" : discount,
+			"email" : email,
+			"active" : active,
+			"order_date" : order_date
+		}
+		console.log(data);
+		var token = '{{csrf_token}}'; 
+        
+        // POST AJAX request
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'post_Updatesql' %}",
+            datatype: "json",
+            contentType: "application/json",
+            headers: { "X-CSRFToken": token },
+            data: JSON.stringify(data),
+            	//Persons_id: Persons_id_val, 		//to pass 1 var we can use this
+            success: function (response) {
+                console.log(response)
+                alert('data updated successfully')
+            },
+            error: function (response) {
+                console.log('sever issue')
+            }
+        })
+	}
+
+	function post_DeleteFunction(e){
+		var Persons_id =$("#Persons_id").val();
+		var	city =$("#city").val();
+		var	Persons_name =$("#Persons_name").val();
+		var	assets =$("#assets").val();
+		var	is_alien =$("#is_alien").val();
+		var	age =$("#age").val();
+		var	month_expense =$("#month_expense").val();
+		var	discount =$("#discount").val();
+		var	email =$("#email").val();
+		var	active =$("#active").val();
+		var	order_date =$("#order_date").val();
+
+		var data = {
+			"Persons_id" : Persons_id,
+			"city" : city,
+			"Persons_name" : Persons_name,
+			"assets" : assets,
+			"is_alien" : is_alien,
+			"age" : age,
+			"month_expense" : month_expense,
+			"discount" : discount,
+			"email" : email,
+			"active" : active,
+			"order_date" : order_date
+		}
+		console.log(data);
+		var token = '{{csrf_token}}'; 
+        
+        // POST AJAX request
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'post_Deletesql' %}",
+            datatype: "json",
+            contentType: "application/json",
+            headers: { "X-CSRFToken": token },
+            data: JSON.stringify(data),
+            	//Persons_id: Persons_id_val, 		//to pass 1 var we can use this
+            success: function (response) {
+                console.log(response)
+                alert('data deleted successfully')
+            },
+            error: function (response) {
+                console.log('sever issue')
+            }
+        })
+	}
+	
+</script>
+{% endblock javascript %}
+
+<body>
+	{% block content %}
+	<table style="border: 1px solid black">
+		<DIV>
+			<input id="fetchbtn" onclick="getFunction()"  value="GET"  type="button"/>
+			<input type="button" id="postdata" onclick="post_InsertFunction()" value="INSERT"/>
+			<input id="updatedata" onclick="post_UpdateFunction()"  value="UPDATE"  type="button"/> 
+			<input id="deletedata" onclick="post_DeleteFunction()"  value="DELETE"  type="button"/>
+		</DIV> <br>
+		<tr>
+			<td>Persons_id</td>
+			<td>city</td>
+			<td>Persons_name</td>
+			<td>assets</td>
+			<td>is_alien</td>
+			<td>age</td>
+			<td>month_expense</td>
+			<td>discount</td>
+			<td>email</td>
+			<td>active</td>
+			<td>order_date</td>
+		</tr>
+		<tr>
+			<td><input type="text" name="Persons_id" size="4" id="Persons_id" ></td>
+			<td><input type="text" name="city" size="4" id="city"></td>
+			<td><input type="text" name="Persons_name" size="4" id="Persons_name"></td>
+			<td><input type="text" name="assets" size="4" id="assets"></td>
+			<td><input type="text" name="is_alien" size="4" id="is_alien"></td>
+			<td><input type="text" name="age" size="4" id="age"></td>
+			<td><input type="text" name="month_expense" size="4" id="month_expense"></td>
+			<td><input type="text" name="discount" size="4" id="discount"></td>
+			<td><input type="text" name="email" size="4" id="email"></td>
+			<td><input type="text" name="active" size="4" id="active"></td>
+			<td><input type="text" name="order_date" size="4" id="order_date"></td>				
+		</tr>
+	</table>
+	<table style="border: 1px solid black" id="my_friends">
+		<tr>
+			<td>Persons_id</td>
+			<td>city</td>
+			<td>Persons_name</td>
+			<td>assets</td>
+			<td>is_alien</td>
+			<td>age</td>
+			<td>month_expense</td>
+			<td>discount</td>
+			<td>email</td>
+			<td>active</td>
+			<td>order_date</td>
+		</tr>
+		
+		{% for i in human_Persons %}
+		<tr>
+			<td>{{i.city}}</td>
+			<td>{{i.city}}</td>
+			<td>{{i.Persons_name}}</td>
+			<td>{{i.assets}}</td>
+			<td>{{i.is_alien}}</td>
+			<td>{{i.age}}</td>
+			<td>{{i.month_expense}}</td>
+			<td>{{i.discount}}</td>
+			<td>{{i.email}}</td>
+			<td>{{i.active}}</td>
+			<td>{{i.order_date}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	<div id="test"></div>
+</body>
+ {% endblock content %}
+</html>

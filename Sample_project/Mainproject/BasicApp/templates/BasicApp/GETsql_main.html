@@ -1,0 +1,122 @@
+<!--
+step1 : used for loop
+step2: got dict key values -- i.id
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}table{% endblock title %}</title>
+	{% block style %}
+    {% endblock style %}
+</head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+
+{% block javascript %}
+<script type="text/javascript">
+	function getFunction(e){
+		//e.preventDefault();
+        // get the nickname
+        //var nick_name = $("#nickname").val();
+        // GET AJAX request
+        $.ajax({
+            type: 'GET',
+            url: "{% url 'display_table' %}",
+            success: function (response) {
+                // if not valid user, alert the user
+                if(!response["human_Persons"]){
+                    alert("no data from backend");
+                } else {
+             		//alert("successfullt got data from backend");
+             		var fields = response["human_Persons"][1]
+					console.log(fields)
+                    for (var i=0; i<response.human_Persons.length; i++) {
+ 							console.log(response.human_Persons[i].Persons_id);
+						}
+                }
+            },
+            error: function (response) {
+                alert('sever issue')
+            }
+        })
+
+	}
+
+
+</script>
+{% endblock javascript %}
+
+<body>
+	{% block content %}
+   
+	<table style="border: 1px solid black">
+		<tr>
+			<td> 
+				<input id="fetchbtn" onclick="getFunction()"  value="GETBtn"  type="button"/>
+			</td>
+		</tr>
+		<tr>
+			<td>Persons_id</td>
+			<td>city</td>
+			<td>Persons_name</td>
+			<td>assets</td>
+			<td>is_alien</td>
+			<td>age</td>
+			<td>month_expense</td>
+			<td>discount</td>
+			<td>email</td>
+			<td>active</td>
+			<td>order_date</td>
+		</tr>
+		<tr>
+			<td><input type="text" name="Persons_id" size="4"></td>
+			<td><input type="text" name="city" size="4"></td>
+			<td><input type="text" name="Persons_name" size="4"></td>
+			<td><input type="text" name="assets" size="4"></td>
+			<td><input type="text" name="is_alien" size="4"></td>
+			<td><input type="text" name="age" size="4"></td>
+			<td><input type="text" name="month_expense" size="4"></td>
+			<td><input type="text" name="discount" size="4"></td>
+			<td><input type="text" name="email" size="4"></td>
+			<td><input type="text" name="active" size="4"></td>
+			<td><input type="text" name="order_date" size="4"></td>				
+		</tr>
+	</table>
+	<table style="border: 1px solid black" id="my_friends">
+		<tr>
+			<td>Persons_id</td>
+			<td>city</td>
+			<td>Persons_name</td>
+			<td>assets</td>
+			<td>is_alien</td>
+			<td>age</td>
+			<td>month_expense</td>
+			<td>discount</td>
+			<td>email</td>
+			<td>active</td>
+			<td>order_date</td>
+		</tr>
+		
+		{% for i in human_Persons %}
+		<tr>
+			<td>{{i.city}}</td>
+			<td>{{i.city}}</td>
+			<td>{{i.Persons_name}}</td>
+			<td>{{i.assets}}</td>
+			<td>{{i.is_alien}}</td>
+			<td>{{i.age}}</td>
+			<td>{{i.month_expense}}</td>
+			<td>{{i.discount}}</td>
+			<td>{{i.email}}</td>
+			<td>{{i.active}}</td>
+			<td>{{i.order_date}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	<div id="test"></div>
+</body>
+ {% endblock content %}
+</html>

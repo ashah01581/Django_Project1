@@ -1,0 +1,46 @@
+<!--
+step1 : used for loop
+step2: got dict key values -- i.id
+
+-->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>table</title>
+</head>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script type="text/javascript">
+</script>
+<body>
+	<table style="border: 1px solid black">
+		<td>Persons_id</td>
+		<td>city</td>
+		<td>Persons_name</td>
+		<td>assets</td>
+		<td>is_alien</td>
+		<td>age</td>
+		<td>month_expense</td>
+		<td>discount</td>
+		<td>email</td>
+		<td>active</td>
+		<td>order_date</td>
+		{% for i in sql_human_Persons %}
+		<tr>
+			<td>{{i.Persons_id}}</td>
+			<td>{{i.city}}</td>
+			<td>{{i.Persons_name}}</td>
+			<td>{{i.assets}}</td>
+			<td>{{i.is_alien}}</td>
+			<td>{{i.age}}</td>
+			<td>{{i.month_expense}}</td>
+			<td>{{i.discount}}</td>
+			<td>{{i.email}}</td>
+			<td>{{i.active}}</td>
+			<td>{{i.order_date}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</body>
+</html>

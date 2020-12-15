@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}table{% endblock title %}</title>
+	{% block style %}
+    {% endblock style %}
+</head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+{% block javascript %}
+
+<script type="text/javascript">
+	function rent_movie(e){
+		var Movie_id =e;
+
+		var data = {"Movie_id" : Movie_id}
+		var token = '{{csrf_token}}'; 
+		console.log(data)
+        
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'POSTcsv_update_rentmovie' %}",
+            datatype: "json",
+            contentType: "application/json",
+            headers: { "X-CSRFToken": token },
+            data: JSON.stringify(data),
+            success: function (response) {
+            	var URL = 'GETcsv-movies'
+                window.location = URL; 
+                // alert('data success')
+            },
+            error: function (response) {
+                console.log('sever issue')
+            }
+        })
+	}
+</script>
+{% endblock javascript %}
+<body>
+	<div>
+		<a href="disp/addmoviepage">ADD New Movie</a>
+	</div> <br>
+	
+	<table style="border:1px solid blue">
+		<th>id</th>
+		<th>Movie</th>
+		<th>Availibility</th>
+		{% for i in datas %}
+		<tr>
+			<td>{{i.id}}</td>
+			<td>{{i.name}}</td>
+			<td>{{i.availibility}}</td>
+			<td><a href="" onclick="rent_movie({{i.id}})">Rent Movie</a></td>
+		</tr>
+		{% endfor %}
+	</table>	
+</body>
+</html>

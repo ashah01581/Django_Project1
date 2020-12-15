@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>{% block title %}table{% endblock title %}</title>
+	{% block style %}
+    {% endblock style %}
+</head>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+{% block javascript %}
+<script>
+	function POSTcsvdeleteFn(e){
+		var data={"row_id":e}
+
+		var token = '{{csrf_token}}'; 
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'POSTcsv_delete' %}",
+            datatype: "json",
+            contentType: "application/json",
+            headers: { "X-CSRFToken": token },
+            data: JSON.stringify(data),
+            success: function (response) {
+            	console.log(response)
+                // if not valid user, alert the user
+                if(!response["row_id"]){
+                    alert("no data from backend");
+                } 
+                else {
+                	var URL = 'GETcsv-customer'                //MIMP: to reload page at the end.
+                	window.location = URL; 
+                }
+            },
+            error: function (response) {
+                alert('sever issue')
+            }
+        })
+	}
+</script>
+{% endblock javascript %}
+<body>
+	<table>
+		<th>id</th>
+		<th>first_name</th>
+		<th>last_name</th>
+			{% for i in datas%}
+		<tr>
+			<td>{{i.id}}</td>
+			<td>{{i.fname}}</td>
+			<td>{{i.lname}}</td>
+			<td><button id={{i.id}} onclick="POSTcsvdeleteFn({{i}})" value={{i.id}}>Delete</button></td>
+		</tr>
+		    {% endfor %}
+	</table>	
+</body>
+</html>
